@@ -3,8 +3,8 @@ package it.polito.tdp.librettovoti.model;
 import java.util.Objects;
 
 public class Voto {
-	private String nome ;
-	private int punti ;
+	private String nome ; // nome del corso
+	private int punti ; // risultato ottenuto
 	
 	public Voto(String nome, int punti) {
 		super();
@@ -26,8 +26,9 @@ public class Voto {
 	
 	@Override
 	public String toString() {
-		return nome+" : "+ punti;
+		return nome+" : "+ punti; 
 	}
+	// hashCode && equals sono metodi in override che vanno "a braccetto"
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -38,8 +39,8 @@ public class Voto {
 	}
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
+		if (this == obj) // il metodo fa prima una serie di controlli sull'oggetto
+			return true; // e poi confronta le proprietà
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
