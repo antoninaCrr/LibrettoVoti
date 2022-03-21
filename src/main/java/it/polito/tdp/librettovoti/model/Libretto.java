@@ -11,8 +11,14 @@ public class Libretto {
 		this.voti = new ArrayList<Voto>() ;
 	}
 	
-	public void add(Voto v) {
-		this.voti.add(v);
+	public boolean add(Voto v) {
+		// PUNTO 6
+		if(!isDuplicato(v) && !isConflitto(v)) {
+			this.voti.add(v);
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public Libretto filtraPunti(int punti) {  // crea un nuovo libretto a partire da quello esistente 
@@ -62,6 +68,35 @@ public class Libretto {
 			return true; // se c'è già il voto ed ha punteggio diverso allora c'è un conflitto
 		else
 			return false;
+	}
+	
+	public List<Voto> getVoti(){
+		return this.voti;
+	}
+	
+	// PUNTO 7
+	public Libretto votiMigliorati() {
+		Libretto nuovo = new Libretto(); // esempio di factory: ho un metodo intelligente per creare un oggetto con determinate car.
+		for(Voto v : this.voti) {
+			int punti = v.getPunti();
+			if (punti >= 24)
+				punti += 2;
+			else
+				punti += 1; // so per certo che i punti sono almeno pari a 18, altrimenti non sarebbero nel libretto
+			if(punti > 30)
+				punti = 30;
+			// v.setPunti(punti); così non va bene perchè andrei a modificare i punti del voto v presente nel libretto originale
+			nuovo.add(new Voto(v.getNome(),punti)); 
+		}
+		return nuovo;
+	}
+	
+	// PUNTO 9
+	public void cancellaVotiMinori(int punti) {
+		for(Voto v : this.voti) {
+			if(v.getPunti()<punti)
+			this.voti.remove(v);	
+		}	
 	}
 	
 	
