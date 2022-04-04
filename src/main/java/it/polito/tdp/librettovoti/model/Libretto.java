@@ -3,6 +3,8 @@ package it.polito.tdp.librettovoti.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.tdp.librettovoti.db.LibrettoDAO;
+
 public class Libretto {
 
 	private List<Voto> voti ; // all'interno del libretto vi sono una serie di voti
@@ -12,16 +14,20 @@ public class Libretto {
 	}
 	
 	public boolean add(Voto v) {
-		// PUNTO 6
+	/*	// PUNTO 6
 		if(!isDuplicato(v) && !isConflitto(v)) {
 			this.voti.add(v);
 			return true;
 		}else {
 			return false;
-		}
+		}*/
+		LibrettoDAO dao = new LibrettoDAO();
+		boolean result = dao.creaVoto(v);
+		return result;
+		
 	}
 	
-	public Libretto filtraPunti(int punti) {  // crea un nuovo libretto a partire da quello esistente 
+	/*public Libretto filtraPunti(int punti) {  // crea un nuovo libretto a partire da quello esistente 
 		                                      // filtrando sui punti
 		Libretto result = new Libretto() ;
 		for(Voto v: this.voti) {
@@ -40,7 +46,7 @@ public class Libretto {
 	 * @return punteggio numerico, oppure {@code null} se l'esame non esiste
 	 */ // sintassi del JavaDoc, la quale viene fuori ogni volta che viene chiamato il metodo
 	    // battere /**
-	public Integer puntiEsame(String nome) {
+	/*public Integer puntiEsame(String nome) {
 		for(Voto v: this.voti) {
 			if( v.getNome().equals(nome) ) { // MAI confrontare stringhe con =
 				return v.getPunti() ;
@@ -68,14 +74,16 @@ public class Libretto {
 			return true; // se c'è già il voto ed ha punteggio diverso allora c'è un conflitto
 		else
 			return false;
-	}
+	}*/
 	
 	public List<Voto> getVoti(){
-		return this.voti;
+		//return this.voti;
+		LibrettoDAO dao = new LibrettoDAO();
+		return dao.readAllVoto();
 	}
 	
 	// PUNTO 7
-	public Libretto votiMigliorati() {
+	/*public Libretto votiMigliorati() {
 		Libretto nuovo = new Libretto(); // esempio di factory: ho un metodo intelligente per creare un oggetto con determinate car.
 		for(Voto v : this.voti) {
 			int punti = v.getPunti();
@@ -97,11 +105,11 @@ public class Libretto {
 			if(v.getPunti()<punti)
 			this.voti.remove(v);	
 		}	
-	}
+	}*/
 	
 	
-	public String toString() {        
+	/*public String toString() {        
 		return this.voti.toString() ; // "CHIEDO" all'array list di voti di stamparsi
 		                              // senza toString nella classe voto, otterrei solo il riferimento all'oggetto
-	}
+	}*/
 }

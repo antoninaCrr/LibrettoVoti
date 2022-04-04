@@ -1,6 +1,7 @@
 package it.polito.tdp.librettovoti;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -49,7 +50,7 @@ public class FXMLController {
     	
     	// FASE 2. Esecuzione dell'operazione (chiedo al model di eseguire)
         // Dopo i controlli so che i campi che passo a Voto sono corretti
-    	boolean ok = model.add(new Voto(nome,punti));
+    	boolean ok = model.add(new Voto(nome,punti, LocalDate.now()));
     	
     	// FASE 3. Visualizzazione/aggiornamento del risultato
     	if(ok == true) {
@@ -71,10 +72,17 @@ public class FXMLController {
     
     public void setModel(Libretto model) {  // il Controller si ricorda qual è la classe model su cui lavorare
     	this.model = model;
+    	// appena settato il modello, inizializzo l'interfaccia per la visualizzazione preliminare
+    	List<Voto> voti = model.getVoti();
+    	txtVoti.clear();
+    	txtVoti.appendText("Hai superato "+voti.size()+" esami\n");
+    	for(Voto v:voti) {
+    		txtVoti.appendText(v.toString()+"\n");
+    	}
     }
 
     @FXML
-    void initialize() {
+    void initialize() { // viene chiamato prima del setModel
         assert cmbPunti != null : "fx:id=\"cmbPunti\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtNome != null : "fx:id=\"txtNome\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtVoti != null : "fx:id=\"txtVoti\" was not injected: check your FXML file 'Scene.fxml'.";
@@ -85,6 +93,7 @@ public class FXMLController {
         for(int p = 18; p <= 30; p++) {
         	cmbPunti.getItems().add(p);
         }
+        
     }
 
 }
